@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage  xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeTracker.Apps.Pages.ConnectionPage">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Padding="20,0">
+            <Entry Placeholder="Pseudo"></Entry>
+            <Entry Placeholder="Password" IsPassword="true"></Entry>
+            <Button Text="Connexion"/>
+            <Button Text="Inscription"
+                    Command="{Binding OnClickRegisterButton}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

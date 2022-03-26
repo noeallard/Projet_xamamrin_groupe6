@@ -16,7 +16,7 @@ namespace TimeTracker.Apps
 
         private static Page CreateStartPage()
         {
-            return new MainPage();
+            return new ConnectionPage();
         }
     }
 }
