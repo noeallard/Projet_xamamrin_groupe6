@@ -18,14 +18,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TimeTracker.Dtos\TimeTracker.Dtos.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Update="Pages\MainPage.xaml.cs">
         <DependentUpon>MainPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\" />
     </ItemGroup>
 
     <ItemGroup>
