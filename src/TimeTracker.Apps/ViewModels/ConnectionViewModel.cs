@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Storm.Mvvm;
 using System;
 using System.Diagnostics;
@@ -6,7 +7,9 @@ using System.Net.Http;
 using System.Text;
 using TimeTracker.Apps.Pages;
 using TimeTracker.Dtos;
+using TimeTracker.Dtos.Authentications;
 using TimeTracker.Dtos.Authentications.Credentials;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TimeTracker.Apps.ViewModels
@@ -64,10 +67,20 @@ namespace TimeTracker.Apps.ViewModels
                 Uri uri = new Uri(Urls.HOST + "/" + Urls.LOGIN);
                 HttpResponseMessage response = await client.PostAsync(uri, content);
                 response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                Debug.WriteLine(responseBody);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var parsedObject = JObject.Parse(responseBody);
+                    LoginResponse loginResponse = JsonConvert.DeserializeObject<LoginResponse>(parsedObject["data"].ToString());
+
+                    Preferences.Set("access_token", loginResponse.AccessToken);
+                    Preferences.Set("refresh_token", loginResponse.RefreshToken);
+                }
+
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
