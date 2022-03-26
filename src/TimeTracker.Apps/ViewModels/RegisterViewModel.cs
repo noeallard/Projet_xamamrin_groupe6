@@ -16,6 +16,10 @@ namespace TimeTracker.Apps.ViewModels
     {
 
         HttpClient client;
+        private string _email;
+        private string _password;
+        private string _lastname;
+        private string _firstname;
 
         public async void onClick()
         {
@@ -23,10 +27,12 @@ namespace TimeTracker.Apps.ViewModels
             registerRequest.ClientId = "MOBILE";
             registerRequest.ClientSecret = "COURS";
 
-            registerRequest.Email = "test1@gmail.com";
-            registerRequest.Password = "password";
-            registerRequest.FirstName = "test1";
-            registerRequest.LastName = "test1";
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+Email+" "+Password+" "+FirstName+" "+LastName);
+
+            registerRequest.Email = Email;
+            registerRequest.Password = Password;
+            registerRequest.FirstName = FirstName;
+            registerRequest.LastName = LastName;
 
             string json = JsonConvert.SerializeObject(registerRequest, Formatting.Indented);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -51,6 +57,29 @@ namespace TimeTracker.Apps.ViewModels
 
 
             /*await NavigationService.PushAsync<MainPage>();*/
+        }
+
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; }
+        }
+
+        public string Password { 
+            get { return _password; } 
+            set { _password = value; }
+        }
+
+        public string FirstName
+        {
+            get { return _firstname; }
+            set { _firstname = value; }
+        }
+
+        public string LastName
+        {
+            get { return _lastname; }
+            set { _lastname = value; }
         }
         public Command OnClick
         {

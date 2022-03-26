@@ -4,10 +4,10 @@
              x:Class="TimeTracker.Apps.Pages.RegisterPage">
     <ContentPage.Content>
         <StackLayout>
-            <Entry Placeholder="Email"></Entry>
-            <Entry Placeholder="mot de passe "></Entry>
-            <Entry Placeholder="Prenom"></Entry>
-            <Entry Placeholder="Nom"></Entry>
+            <Entry Placeholder="Email" Text="{Binding Email}"></Entry>
+            <Entry Placeholder="mot de passe " Text="{Binding Password}"></Entry>
+            <Entry Placeholder="Prenom" Text="{Binding Firstname}"></Entry>
+            <Entry Placeholder="Nom" Text="{Binding Lastname}"></Entry>
             <Button Text="S'inscrire"
                     Command="{Binding OnClick}"></Button>
         </StackLayout>
