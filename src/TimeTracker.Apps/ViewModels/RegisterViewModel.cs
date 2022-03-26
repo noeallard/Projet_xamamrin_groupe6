@@ -53,8 +53,8 @@ namespace TimeTracker.Apps.ViewModels
             {
                 Debug.WriteLine(ex.Message);
             }
-            
 
+            await NavigationService.PushAsync<ConnectionPage>();
 
             /*await NavigationService.PushAsync<MainPage>();*/
         }
