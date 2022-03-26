@@ -76,6 +76,7 @@ namespace TimeTracker.Apps.ViewModels
 
                     Preferences.Set("access_token", loginResponse.AccessToken);
                     Preferences.Set("refresh_token", loginResponse.RefreshToken);
+                    await NavigationService.PushAsync<MainPage>();
                 }
 
 

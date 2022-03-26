@@ -48,15 +48,12 @@ namespace TimeTracker.Apps.ViewModels
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 Debug.WriteLine(responseBody);
+                await NavigationService.PushAsync<ConnectionPage>();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-
-            await NavigationService.PushAsync<ConnectionPage>();
-
-            /*await NavigationService.PushAsync<MainPage>();*/
         }
 
         public string Email
