@@ -4,9 +4,12 @@
              x:Class="TimeTracker.Apps.Pages.ConnectionPage">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Padding="20,0">
-            <Entry Placeholder="Pseudo"></Entry>
-            <Entry Placeholder="Password" IsPassword="true"></Entry>
-            <Button Text="Connexion"/>
+            <Entry Placeholder="Pseudo"
+                   Text="{Binding Login}"></Entry>
+            <Entry Placeholder="Password" IsPassword="true"
+                   Text="{Binding Password}"></Entry>
+            <Button Text="Connexion"
+                    Command="{Binding OnClickConnectionButton}"/>
             <Button Text="Inscription"
                     Command="{Binding OnClickRegisterButton}"></Button>
         </StackLayout>
