@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Storm.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TimeTracker.Apps.Models
 {
-    public class Project
+    public class Project : NotifierBase
     {
         private int _id;
         private string _name;
@@ -24,13 +25,13 @@ namespace TimeTracker.Apps.Models
         }
         public string Name
         {
-            get { return _name; }
-            set { _name = value; }
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
         public string Description
         {
-            get { return _description; }
-            set { _description = value; }
+            get => _description;
+            set => SetProperty(ref _description, value);
         }
         public int TotalSecond
         {

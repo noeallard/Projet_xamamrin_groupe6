@@ -9,7 +9,6 @@ namespace TimeTracker.Apps.Pages
         MainViewModel viewModel = new MainViewModel();
         public MainPage()
         {
-            viewModel.loadListProject();
             InitializeComponent();
             BindingContext = new MainViewModel();
             NavigationPage.SetHasBackButton(this, false);

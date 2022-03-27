@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Storm.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
@@ -16,10 +17,18 @@ namespace TimeTracker.Apps.ViewModels
     public class MainViewModel : ViewModelBase
     {
         HttpClient client;
-        List<Project> projects;
+        private ObservableCollection<Project> _projects;
+
+        public ObservableCollection<Project> Projects
+        {
+            get => _projects;
+            set => SetProperty(ref _projects, value);
+        }
         public MainViewModel()
         {
             client = new HttpClient();
+            _projects = new ObservableCollection<Project>();
+            loadListProject();
         }
 
         public async void loadListProject()
@@ -35,7 +44,11 @@ namespace TimeTracker.Apps.ViewModels
                     Debug.WriteLine("AAAAAGJHGHJBHKDSHDSDJS");
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
-                    List<Project> loginResponse = JsonConvert.DeserializeObject<List<Project>>(parsedObject["data"].ToString());
+                    ObservableCollection<Project> projets = JsonConvert.DeserializeObject<ObservableCollection<Project>>(parsedObject["data"].ToString());
+                    for (int i = 0; i < projets.Count; i++)
+                    {
+                        _projects.Add(projets[i]);
+                    }
                 }
             }
             catch (Exception ex)
@@ -44,5 +57,7 @@ namespace TimeTracker.Apps.ViewModels
             }
 
         }
+
+        
     }
 }
