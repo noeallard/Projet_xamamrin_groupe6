@@ -28,6 +28,7 @@ namespace TimeTracker.Apps.ViewModels
         }
         public MainViewModel()
         {
+            OnClickProfileButton = new Command(onClickProfileButton);
             OnClickAddButton = new Command(onClickAddButton);
             client = new HttpClient();
             _projects = new ObservableCollection<Project>();
@@ -95,6 +96,16 @@ namespace TimeTracker.Apps.ViewModels
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        public Command OnClickProfileButton
+        {
+            get;
+        }
+
+        public async void onClickProfileButton()
+        {
+            await NavigationService.PushAsync<ProfilePage>();
         }
     }
 }

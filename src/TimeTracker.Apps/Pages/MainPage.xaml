@@ -50,6 +50,14 @@
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickAddButton}"
                 />
+        <Button Text="Mon profil"
+                BackgroundColor="LightSkyBlue"
+                CornerRadius="10"
+                HeightRequest="50"
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding OnClickProfileButton}"
+                />
     </Grid>
 
 </forms:BaseContentPage>
