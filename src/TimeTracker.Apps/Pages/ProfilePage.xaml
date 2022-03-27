@@ -4,7 +4,15 @@
              x:Class="TimeTracker.Apps.Pages.ProfilePage">
   <ContentPage.Content>
       <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
+            <Label Text="Informations "></Label>
+            <Entry Placeholder="Nouvelle adresse email"
+                   Text="{Binding Email}"></Entry>
+            <Entry Placeholder="Nouveeau prénom"
+                   Text="{Binding Firstname}"></Entry>
+            <Entry Placeholder="Nouveeau nom"
+                   Text="{Binding Lastname}"></Entry>
+            <Button Text="Appliquer changements"
+                    Command="{Binding OnClickAddProjectButton}"/>
+        </StackLayout>
   </ContentPage.Content>
 </ContentPage>

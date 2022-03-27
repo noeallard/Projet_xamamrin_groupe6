@@ -29,6 +29,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Update="Pages\AddProject.xaml">
+        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      </EmbeddedResource>
       <EmbeddedResource Update="Pages\ConnectionPage.xaml">
         <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       </EmbeddedResource>
