@@ -36,7 +36,7 @@
         </DataTemplate>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*, Auto" Margin="12,0,12,48">
+    <Grid RowDefinitions="*, auto,auto" Margin="12,0,12,48">
         <ListView ItemsSource="{Binding Projects}"
                   Grid.Row="0"
                   HasUnevenRows="True"
