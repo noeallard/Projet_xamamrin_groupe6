@@ -9,6 +9,7 @@ using System.Text;
 using TimeTracker.Apps.Models;
 using TimeTracker.Dtos;
 using TimeTracker.Dtos.Authentications.Credentials;
+using Xamarin.Essentials;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -26,7 +27,7 @@ namespace TimeTracker.Apps.ViewModels
             try
             {
                 Uri uri = new Uri(Urls.HOST + "/" + Urls.LIST_PROJECTS);
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer e4948d5a65f94b46acfb3eafa311c8c6");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer "+ Preferences.Get("access_token", "undefiend"));
                 HttpResponseMessage response = await client.GetAsync(uri);
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)

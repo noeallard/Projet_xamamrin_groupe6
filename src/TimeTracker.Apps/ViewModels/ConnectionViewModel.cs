@@ -74,6 +74,7 @@ namespace TimeTracker.Apps.ViewModels
                     var parsedObject = JObject.Parse(responseBody);
                     LoginResponse loginResponse = JsonConvert.DeserializeObject<LoginResponse>(parsedObject["data"].ToString());
 
+                    Debug.WriteLine(loginResponse.AccessToken);
                     Preferences.Set("access_token", loginResponse.AccessToken);
                     Preferences.Set("refresh_token", loginResponse.RefreshToken);
                     await NavigationService.PushAsync<MainPage>();

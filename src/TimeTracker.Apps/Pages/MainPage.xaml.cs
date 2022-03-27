@@ -1,5 +1,6 @@
 ﻿using Storm.Mvvm.Forms;
 using TimeTracker.Apps.ViewModels;
+using Xamarin.Forms;
 
 namespace TimeTracker.Apps.Pages
 {
@@ -11,7 +12,7 @@ namespace TimeTracker.Apps.Pages
             viewModel.loadListProject();
             InitializeComponent();
             BindingContext = new MainViewModel();
-
+            NavigationPage.SetHasBackButton(this, false);
         }
     }
 }
