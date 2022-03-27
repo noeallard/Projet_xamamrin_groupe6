@@ -39,7 +39,10 @@ namespace TimeTracker.Apps.ViewModels
             try
             {
                 Uri uri = new Uri(Urls.HOST + "/" + Urls.LIST_PROJECTS);
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer "+ Preferences.Get("access_token", "undefiend"));
+                if (!client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                }
                 HttpResponseMessage response = await client.GetAsync(uri);
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
@@ -50,6 +53,7 @@ namespace TimeTracker.Apps.ViewModels
                     ObservableCollection<Project> projets = JsonConvert.DeserializeObject<ObservableCollection<Project>>(parsedObject["data"].ToString());
                     for (int i = 0; i < projets.Count; i++)
                     {
+                        projets[i].OnClickDelete = new Command<Project>(DeleteProject);
                         _projects.Add(projets[i]);
                     }
                 }
@@ -71,6 +75,26 @@ namespace TimeTracker.Apps.ViewModels
             await NavigationService.PushAsync<AddProject>();
         }
 
-
+        public async void DeleteProject(Project project)
+        {
+            try
+            {
+                client = new HttpClient();
+                Uri uri = new Uri((Urls.HOST + "/" + Urls.DELETE_PROJECT).Replace("{projectId}",project.Id.ToString()));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                HttpResponseMessage response = await client.DeleteAsync(uri);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Project deleted");
+                    int index = Projects.IndexOf(project);
+                    Projects.RemoveAt(index);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
     }
 }

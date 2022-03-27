@@ -1,7 +1,10 @@
 ﻿using Storm.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using TimeTracker.Apps.ViewModels;
+using Xamarin.Forms;
 
 namespace TimeTracker.Apps.Models
 {
@@ -38,5 +41,12 @@ namespace TimeTracker.Apps.Models
             get { return _totalSecond; }
             set { _totalSecond = value; }
         }
+
+        public Command OnClickDelete
+        {
+            get;
+            set;
+        }
+
     }
 }
