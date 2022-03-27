@@ -4,15 +4,21 @@
              x:Class="TimeTracker.Apps.Pages.ProfilePage">
   <ContentPage.Content>
       <StackLayout>
-            <Label Text="Informations "></Label>
+            <Label Text="Informations du compte"></Label> 
             <Entry Placeholder="Nouvelle adresse email"
                    Text="{Binding Email}"></Entry>
-            <Entry Placeholder="Nouveeau prénom"
+            <Entry Placeholder="Nouveau prénom"
                    Text="{Binding Firstname}"></Entry>
-            <Entry Placeholder="Nouveeau nom"
+            <Entry Placeholder="Nouveau nom"
                    Text="{Binding Lastname}"></Entry>
             <Button Text="Appliquer changements"
-                    Command="{Binding OnClickAddProjectButton}"/>
+                    Command="{Binding OnClickModifUserButton}"/>
+            <Entry Placeholder="Ancien mots de passe"
+                   Text="{Binding OldPassword}"></Entry>
+            <Entry Placeholder="Nouveau mots de passe"
+                   Text="{Binding NewPassword}"></Entry>
+            <Button Text="Appliquer changements"
+                    Command="{Binding OnClickModifUserPasswordButton}"/>
         </StackLayout>
   </ContentPage.Content>
 </ContentPage>
