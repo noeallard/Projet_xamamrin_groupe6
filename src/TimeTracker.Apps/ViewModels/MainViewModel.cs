@@ -8,9 +8,11 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using TimeTracker.Apps.Models;
+using TimeTracker.Apps.Pages;
 using TimeTracker.Dtos;
 using TimeTracker.Dtos.Authentications.Credentials;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -26,6 +28,7 @@ namespace TimeTracker.Apps.ViewModels
         }
         public MainViewModel()
         {
+            OnClickAddButton = new Command(onClickAddButton);
             client = new HttpClient();
             _projects = new ObservableCollection<Project>();
             loadListProject();
@@ -58,6 +61,16 @@ namespace TimeTracker.Apps.ViewModels
 
         }
 
-        
+        public Command OnClickAddButton
+        {
+            get;
+        }
+
+        public async void onClickAddButton()
+        {
+            await NavigationService.PushAsync<AddProject>();
+        }
+
+
     }
 }

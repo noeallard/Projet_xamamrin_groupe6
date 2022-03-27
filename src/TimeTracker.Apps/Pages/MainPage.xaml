@@ -26,6 +26,8 @@
                 <Label Text="Projets"></Label>
             </ListView.Header>
         </ListView>
+        <Button Text="Ajouter projet"
+                    Command="{Binding OnClickAddButton}"></Button>
     </StackLayout>
 
 </forms:BaseContentPage>
