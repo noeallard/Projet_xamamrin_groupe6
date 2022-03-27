@@ -9,25 +9,46 @@
         <DataTemplate x:DataType="Models:Project" x:Key="ProjectTemplate">
             <ViewCell>
                 <StackLayout>
-                    <Label Text="{Binding Name}"/>
-                    <Label Text="{Binding Description}"/>
+                    <Label Text="{Binding Name}" FontSize="24"/>
+                    <Label Text="{Binding Description}" FontSize="16" LineBreakMode="WordWrap" MaxLines="2"/>
+                    <Grid ColumnDefinitions="*,*" >
+                        <Button Grid.Column="0"
+                                Text="Editer"
+                                FontSize="12"
+                                BackgroundColor="LightSkyBlue"
+                                CornerRadius="10"
+                                HeightRequest="34"
+                                CommandParameter="{Binding .}"
+                        />
+                        <Button Grid.Column="1"
+                                Text="Supprimer"
+                                TextColor="White"
+                                FontSize="12"
+                                BackgroundColor="Red"
+                                CornerRadius="10"
+                                HeightRequest="34"
+                                CommandParameter="{Binding .}"
+                        />
+                    </Grid>
                 </StackLayout>
             </ViewCell>
         </DataTemplate>
     </ContentPage.Resources>
 
-    <StackLayout>
-        <ListView x:Name="projectListView"
-                      StyleClass="ListViewStyle"
-                      ItemsSource="{Binding Projects}"
-                      CachingStrategy="RecycleElement"
-                      ItemTemplate="{StaticResource ProjectTemplate}">
-            <ListView.Header>
-                <Label Text="Projets"></Label>
-            </ListView.Header>
-        </ListView>
-        <Button Text="Ajouter projet"
-                    Command="{Binding OnClickAddButton}"></Button>
-    </StackLayout>
+    <Grid RowDefinitions="*, Auto" Margin="12,0,12,48">
+        <ListView ItemsSource="{Binding Projects}"
+                  Grid.Row="0"
+                  HasUnevenRows="True"
+                  ItemTemplate="{StaticResource ProjectTemplate}"
+                  />
+        <Button Text="Ajouter"
+                BackgroundColor="LightSkyBlue"
+                CornerRadius="10"
+                HeightRequest="50"
+                Grid.Row="1"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding OnClickAddButton}"
+                />
+    </Grid>
 
 </forms:BaseContentPage>
