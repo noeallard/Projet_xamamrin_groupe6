@@ -9,25 +9,22 @@
         <DataTemplate x:DataType="Models:Project" x:Key="ProjectTemplate">
             <ViewCell>
                 <StackLayout>
-                    <Label Text="{Binding Name}"
-                           FontSize="32"
-                    />
-                    <Label Text="{Binding Description}"
-                           FontSize="32"
-                    />
+                    <Label Text="{Binding Name}"/>
+                    <Label Text="{Binding Description}"/>
                 </StackLayout>
-                
             </ViewCell>
         </DataTemplate>
     </ContentPage.Resources>
 
     <StackLayout>
-        <Label Text="albel"></Label>
         <ListView x:Name="projectListView"
                       StyleClass="ListViewStyle"
                       ItemsSource="{Binding Projects}"
                       CachingStrategy="RecycleElement"
                       ItemTemplate="{StaticResource ProjectTemplate}">
+            <ListView.Header>
+                <Label Text="Projets"></Label>
+            </ListView.Header>
         </ListView>
     </StackLayout>
 
