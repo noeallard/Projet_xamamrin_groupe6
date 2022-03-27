@@ -72,11 +72,11 @@ namespace TimeTracker.Apps.ViewModels
             setPasswordRequest.NewPassword = _newpassword;
             string json = JsonConvert.SerializeObject(setPasswordRequest, Formatting.Indented);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            /*try
+            try
             {
                 Uri uri = new Uri(Urls.HOST + "/" + Urls.SET_PASSWORD);
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
-                HttpResponseMessage response = await client.SendAsync(uri, content);
+                HttpResponseMessage response = await client.PatchAsync(uri, content);
                 response.EnsureSuccessStatusCode();
 
                 if (response.IsSuccessStatusCode)
@@ -92,7 +92,7 @@ namespace TimeTracker.Apps.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-            }*/
+            }
         }
         public async void onClickModifUserButton()
         {
@@ -103,11 +103,14 @@ namespace TimeTracker.Apps.ViewModels
 
             string json = JsonConvert.SerializeObject(setUserProfileRequest, Formatting.Indented);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-           /* try
+            try
             {
                 Uri uri = new Uri(Urls.HOST + "/" + Urls.SET_USER_PROFILE);
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
-                HttpResponseMessage response = await client.SendAsync(uri, content);
+                if (!client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                }
+                HttpResponseMessage response = await client.PatchAsync(uri, content);
                 response.EnsureSuccessStatusCode();
 
                 if (response.IsSuccessStatusCode)
@@ -123,7 +126,7 @@ namespace TimeTracker.Apps.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-            }*/
+            }
 
         }
 
