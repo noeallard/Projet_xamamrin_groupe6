@@ -82,6 +82,7 @@ namespace TimeTracker.Apps.ViewModels
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     UserProfileResponse user = JsonConvert.DeserializeObject<UserProfileResponse>(parsedObject["data"].ToString());
+                    Debug.WriteLine(user.Email+" "+user.FirstName+" "+user.LastName);
                     Email = user.Email;
                     Firstname = user.FirstName;
                     Lastname = user.LastName;
@@ -103,7 +104,10 @@ namespace TimeTracker.Apps.ViewModels
             try
             {
                 Uri uri = new Uri(Urls.HOST + "/" + Urls.SET_PASSWORD);
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                if (!client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                }
                 HttpResponseMessage response = await client.PatchAsync(uri, content);
                 response.EnsureSuccessStatusCode();
 
@@ -112,7 +116,7 @@ namespace TimeTracker.Apps.ViewModels
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     Debug.WriteLine(response);
-                    //await NavigationService.PushAsync<MainPage>();
+                    await NavigationService.PushAsync<MainPage>();
                 }
 
 
@@ -146,7 +150,7 @@ namespace TimeTracker.Apps.ViewModels
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     Debug.WriteLine(response);
-                    //await NavigationService.PushAsync<MainPage>();
+                    await NavigationService.PushAsync<MainPage>();
                 }
 
 
