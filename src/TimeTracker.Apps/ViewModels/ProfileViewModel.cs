@@ -65,6 +65,34 @@ namespace TimeTracker.Apps.ViewModels
                 SetProperty(ref _newpassword, value);
             }
         }
+
+        public async void loadUser()
+        {
+             try
+             {
+                Uri uri = new Uri(Urls.HOST + "/" + Urls.USER_PROFILE);
+                if (!client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                }
+                HttpResponseMessage response = await client.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var parsedObject = JObject.Parse(responseBody);
+                    UserProfileResponse user = JsonConvert.DeserializeObject<UserProfileResponse>(parsedObject["data"].ToString());
+                    Email = user.Email;
+                    Firstname = user.FirstName;
+                    Lastname = user.LastName;
+                }
+             }
+             catch (Exception ex)
+             {
+                Debug.WriteLine(ex.Message);
+             }
+        }
+
         public async void onClickModifUserPasswordButton()
         {
             SetPasswordRequest setPasswordRequest = new SetPasswordRequest();
@@ -144,6 +172,7 @@ namespace TimeTracker.Apps.ViewModels
             OnClickModifUserButton = new Command(onClickModifUserButton);
             OnClickModifUserPasswordButton = new Command(onClickModifUserPasswordButton);
             client = new HttpClient();
+            loadUser();
         }
     }
 }

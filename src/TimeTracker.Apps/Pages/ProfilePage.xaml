@@ -6,7 +6,8 @@
 
   <ContentPage.Content>
       <StackLayout>
-            <Label Text="Informations du compte"></Label> 
+            <Label Text="Informations du compte" HorizontalOptions="Center" FontSize="24" Margin="40"></Label>
+            
             <Entry Placeholder="Nouvelle adresse email"
                    Text="{Binding Email}"></Entry>
             <Entry Placeholder="Nouveau prénom"
@@ -16,9 +17,9 @@
             <Button Text="Appliquer changements"
                     Command="{Binding OnClickModifUserButton}"/>
             <Entry Placeholder="Ancien mots de passe"
-                   Text="{Binding OldPassword}"></Entry>
+                   IsPassword="true" Text="{Binding OldPassword}" Margin="0,40,0,0"></Entry>
             <Entry Placeholder="Nouveau mots de passe"
-                   Text="{Binding NewPassword}"></Entry>
+                   IsPassword="true" Text="{Binding NewPassword}"></Entry>
             <Button Text="Appliquer changements"
                     Command="{Binding OnClickModifUserPasswordButton}"/>
         </StackLayout>
