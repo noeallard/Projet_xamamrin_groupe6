@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:RegisterViewModel"
              x:Class="TimeTracker.Apps.Pages.RegisterPage">
     <ContentPage.Content>
         <StackLayout>
             <Entry Placeholder="Email" Text="{Binding Email}"></Entry>
             <Entry Placeholder="mot de passe " Text="{Binding Password}"></Entry>
-            <Entry Placeholder="Prenom" Text="{Binding Firstname}"></Entry>
-            <Entry Placeholder="Nom" Text="{Binding Lastname}"></Entry>
+            <Entry Placeholder="Prenom" Text="{Binding FirstName}"></Entry>
+            <Entry Placeholder="Nom" Text="{Binding LastName}"></Entry>
             <Button Text="S'inscrire"
                     Command="{Binding OnClick}"></Button>
         </StackLayout>
