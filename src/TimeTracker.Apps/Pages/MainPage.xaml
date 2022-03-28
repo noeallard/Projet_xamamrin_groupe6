@@ -30,6 +30,12 @@
                                 Command="{Binding OnClickDelete}"
                                 CommandParameter="{Binding .}"
                         />
+                        <Button
+                            Grid.Column="3"
+                            Text="Tasks"
+                            Command = "{Binding OnClickTask}"
+                            CommandParameter="{Binding .}"
+                        />
                     </Grid>
                 </StackLayout>
             </ViewCell>
