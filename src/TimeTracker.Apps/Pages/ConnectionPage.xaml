@@ -9,9 +9,17 @@
             <Entry Placeholder="Password" IsPassword="true"
                    Text="{Binding Password}"></Entry>
             <Button Text="Connexion"
-                    Command="{Binding OnClickConnectionButton}"/>
+                    Command="{Binding OnClickConnectionButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="40"/>
             <Button Text="Inscription"
-                    Command="{Binding OnClickRegisterButton}"></Button>
+                    Command="{Binding OnClickRegisterButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="40"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
