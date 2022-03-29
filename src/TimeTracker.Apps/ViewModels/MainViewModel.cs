@@ -56,6 +56,7 @@ namespace TimeTracker.Apps.ViewModels
                     for (int i = 0; i < projets.Count; i++)
                     {
                         projets[i].OnClickDelete = new Command<Project>(DeleteProject);
+                        projets[i].OnClickTask = new Command<Project>(GoToProjectPage);
                         _projects.Add(projets[i]);
                     }
                 }
