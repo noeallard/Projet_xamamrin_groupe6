@@ -5,23 +5,42 @@
              x:Class="TimeTracker.Apps.Pages.ProfilePage">
 
   <ContentPage.Content>
-      <StackLayout>
-            <Label Text="Informations du compte" HorizontalOptions="Center" FontSize="24" Margin="40"></Label>
-            
+        <StackLayout HorizontalOptions="FillAndExpand" Padding="20,20,20,0">
+            <Frame BackgroundColor="LightSkyBlue" HeightRequest="34" CornerRadius="5">
+                <Label Text="Informations du compte" HorizontalOptions="Center" FontSize="26"></Label>
+            </Frame>
+
             <Entry Placeholder="Nouvelle adresse email"
                    Text="{Binding Email}"></Entry>
+          
             <Entry Placeholder="Nouveau prénom"
                    Text="{Binding Firstname}"></Entry>
+          
             <Entry Placeholder="Nouveau nom"
                    Text="{Binding Lastname}"></Entry>
+          
             <Button Text="Appliquer changements"
-                    Command="{Binding OnClickModifUserButton}"/>
+                    Command="{Binding OnClickModifUserButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="34"/>
+
+            <BoxView BackgroundColor="Black" HeightRequest="1" Margin="0,30,0,25"></BoxView>
+            
             <Entry Placeholder="Ancien mots de passe"
-                   IsPassword="true" Text="{Binding OldPassword}" Margin="0,40,0,0"></Entry>
+                   IsPassword="true" Text="{Binding OldPassword}" ></Entry>
+          
             <Entry Placeholder="Nouveau mots de passe"
                    IsPassword="true" Text="{Binding NewPassword}"></Entry>
+          
             <Button Text="Appliquer changements"
-                    Command="{Binding OnClickModifUserPasswordButton}"/>
+                    Command="{Binding OnClickModifUserPasswordButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="34"/>
+          
         </StackLayout>
   </ContentPage.Content>
 </ContentPage>

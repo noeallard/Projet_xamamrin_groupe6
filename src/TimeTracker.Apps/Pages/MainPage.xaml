@@ -13,12 +13,13 @@
                     <Label Text="{Binding Description}" FontSize="16" LineBreakMode="WordWrap" MaxLines="2"/>
                     <Grid ColumnDefinitions="*,*" >
                         <Button Grid.Column="0"
-                                Text="Editer"
+                                Text="Voir"
                                 FontSize="12"
                                 BackgroundColor="LightSkyBlue"
                                 CornerRadius="10"
                                 HeightRequest="34"
-                                
+                                Command = "{Binding OnClickTask}"
+                                CommandParameter="{Binding .}"
                         />
                         <Button Grid.Column="1"
                                 Text="Supprimer"
@@ -30,19 +31,13 @@
                                 Command="{Binding OnClickDelete}"
                                 CommandParameter="{Binding .}"
                         />
-                        <Button
-                            Grid.Column="3"
-                            Text="Tasks"
-                            Command = "{Binding OnClickTask}"
-                            CommandParameter="{Binding .}"
-                        />
                     </Grid>
                 </StackLayout>
             </ViewCell>
         </DataTemplate>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*, auto,auto" Margin="12,0,12,48">
+    <Grid RowDefinitions="*, auto,auto" Margin="12,0,12,20">
         <ListView x:Name="mainList"
                   ItemsSource="{Binding Projects}"
                   Grid.Row="0"
@@ -52,7 +47,7 @@
         <Button Text="Ajouter"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
-                HeightRequest="50"
+                HeightRequest="44"
                 Grid.Row="1"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickAddButton}"
@@ -60,7 +55,7 @@
         <Button Text="Mon profil"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
-                HeightRequest="50"
+                HeightRequest="44"
                 Grid.Row="2"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickProfileButton}"
