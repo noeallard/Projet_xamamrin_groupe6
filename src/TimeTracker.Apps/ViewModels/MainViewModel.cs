@@ -116,11 +116,9 @@ namespace TimeTracker.Apps.ViewModels
                     var parsedObject = JObject.Parse(responseBody);
                     ObservableCollection<TaskItem> tasks = JsonConvert.DeserializeObject<ObservableCollection<TaskItem>>(parsedObject["data"].ToString());
                     Debug.WriteLine(responseBody);
-                    Debug.WriteLine("acces a la liste des taches");
-                    var projectPage = new ProjectPage
-                    {
-                        BindingContext = tasks
-                    };
+                    Debug.WriteLine(tasks[0].Name);
+                    var projectPage = new ProjectPage(tasks,project.Id);
+               
                     await NavigationService.PushAsync(projectPage);
 
 

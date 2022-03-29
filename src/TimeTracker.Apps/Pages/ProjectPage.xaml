@@ -1,10 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:projects="clr-namespace:TimeTracker.Dtos.Projects;assembly=TimeTracker.Dtos" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:ProjectViewModel"
              x:Class="TimeTracker.Apps.Pages.ProjectPage">
-  <ContentPage.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentPage.Content>
+    <ContentPage.Resources>
+        <DataTemplate x:DataType="projects:TaskItem" x:Key="TaskTemplate">
+            <ViewCell>
+                <StackLayout>
+                    <Label Text="{Binding Name }"></Label>
+                    <Label Text="{Binding Id}"></Label>
+                </StackLayout>
+            </ViewCell>
+
+
+        </DataTemplate>
+    </ContentPage.Resources>
+        <ListView x:Name="taskList"
+                  ItemsSource="{Binding Tasks}"
+                  Grid.Row="0"
+                  HasUnevenRows="True"
+                  ItemTemplate="{StaticResource TaskTemplate}"
+                  />
+
+
+    
 </ContentPage>
