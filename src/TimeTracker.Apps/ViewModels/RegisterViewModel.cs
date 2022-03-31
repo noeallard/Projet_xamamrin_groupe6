@@ -26,34 +26,36 @@ namespace TimeTracker.Apps.ViewModels
             CreateUserRequest registerRequest = new CreateUserRequest();
             registerRequest.ClientId = "MOBILE";
             registerRequest.ClientSecret = "COURS";
-
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+Email+" "+Password+" "+FirstName+" "+LastName);
-
             registerRequest.Email = Email;
             registerRequest.Password = Password;
             registerRequest.FirstName = FirstName;
             registerRequest.LastName = LastName;
-
-            string json = JsonConvert.SerializeObject(registerRequest, Formatting.Indented);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
+            if(Password.Length > 5)
+            {
+                string json = JsonConvert.SerializeObject(registerRequest, Formatting.Indented);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                try
+                {
+                    Debug.WriteLine(Urls.HOST + "/" + Urls.CREATE_USER);
+                    Uri uri = new Uri(Urls.HOST + "/" + Urls.CREATE_USER);
+                    Debug.WriteLine(uri.ToString());
+                    HttpResponseMessage response = await client.PostAsync(uri, content);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(responseBody);
+                    await NavigationService.PushAsync<ConnectionPage>();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
+                }
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Erreur", "Votre mot de passe doit comporter au moins 6 caractères", "OK");
+            }
             
-
-            try
-            {
-                Debug.WriteLine(Urls.HOST+"/"+Urls.CREATE_USER);
-                Uri uri = new Uri(Urls.HOST + "/" + Urls.CREATE_USER);
-                Debug.WriteLine(uri.ToString());
-                HttpResponseMessage response = await client.PostAsync(uri, content);
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-                Debug.WriteLine(responseBody);
-                await NavigationService.PushAsync<ConnectionPage>();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
         }
 
         public string Email
