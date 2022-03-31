@@ -4,41 +4,41 @@ using System;
 using System.Diagnostics;
 using System.Net.Http;
 using TimeTracker.Dtos;
+using TimeTracker.Dtos.Projects;
 using Xamarin.Essentials;
 
 namespace TimeTracker.Apps.ViewModels
 {
+
     public class TaskViewModel : ViewModelBase
     {
-        HttpClient client;
-        public async void loadTask()
+        private TaskItem _task;
+        private String _name;
+        private long _Id;
+        private int _projectId;
+
+       public String Name
         {
-            try
-            {
-                Uri uri = new Uri(Urls.HOST + "/" + Urls.USER_PROFILE);
-                if (!client.DefaultRequestHeaders.Contains("Authorization"))
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
-                }
-                HttpResponseMessage response = await client.GetAsync(uri);
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var parsedObject = JObject.Parse(responseBody);
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
-        public TaskViewModel()
+        public long Id
         {
+            get => _Id;
+            set => SetProperty(ref _Id, value);
+        }
+
+        public TaskViewModel(TaskItem task,int projectId)
+        {
+            _task = task;
+            _name = task.Name;
+            _Id = task.Id;
+            _projectId = projectId;
+
+
             
-            client = new HttpClient();
-            loadTask();
+
         }
+
     }
 }

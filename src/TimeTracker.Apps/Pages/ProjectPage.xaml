@@ -8,6 +8,9 @@
                 <StackLayout>
                     <Label Text="{Binding Name }"></Label>
                     <Label Text="{Binding Id}"></Label>
+                    <Button Text="plus" 
+                            Command="{Binding OnClickAffTask}"
+                            CommandParameter="{Binding .}"></Button>
                 </StackLayout>
             </ViewCell>
 

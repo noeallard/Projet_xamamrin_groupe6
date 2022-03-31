@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:TaskViewModel"
              x:Class="TimeTracker.Apps.Pages.TaskPage">
-  <ContentPage.Content>
-      <StackLayout>
-          <Label Text="TaskPage" />
-      </StackLayout>
-  </ContentPage.Content>
+    <StackLayout>
+        <Label Text="{Binding Name}"></Label>
+    </StackLayout>
+
+
+
+
+
+
+
 </ContentPage>

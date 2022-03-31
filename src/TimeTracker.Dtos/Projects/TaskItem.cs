@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace TimeTracker.Dtos.Projects
+
 {
     public class TaskItem
     {
@@ -13,5 +15,13 @@ namespace TimeTracker.Dtos.Projects
         
         [JsonProperty("times")]
         public List<TimeItem> Times { get; set; }
+
+        public Command OnClickAffTask
+        {
+            get;
+            set;
+        }
     }
+
+    
 }

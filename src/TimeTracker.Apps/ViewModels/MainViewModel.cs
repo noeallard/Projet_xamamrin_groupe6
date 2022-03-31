@@ -103,10 +103,8 @@ namespace TimeTracker.Apps.ViewModels
         {
             try
             {
-                Debug.WriteLine("test acces taches");
                 client = new HttpClient();
                 Uri uri = new Uri((Urls.HOST + "/" + Urls.LIST_TASKS).Replace("{projectId}", project.Id.ToString()));
-                Debug.WriteLine((Urls.HOST + "/" + Urls.LIST_TASKS).Replace("{projectId}", project.Id.ToString()));
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
                 HttpResponseMessage response = await client.GetAsync(uri);
                 response.EnsureSuccessStatusCode();
@@ -115,8 +113,6 @@ namespace TimeTracker.Apps.ViewModels
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     ObservableCollection<TaskItem> tasks = JsonConvert.DeserializeObject<ObservableCollection<TaskItem>>(parsedObject["data"].ToString());
-                    Debug.WriteLine(responseBody);
-                    Debug.WriteLine(tasks[0].Name);
                     var projectPage = new ProjectPage(tasks,project.Id);
                
                     await NavigationService.PushAsync(projectPage);
