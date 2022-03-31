@@ -30,31 +30,47 @@ namespace TimeTracker.Apps.ViewModels
             registerRequest.Password = Password;
             registerRequest.FirstName = FirstName;
             registerRequest.LastName = LastName;
-            if(Password.Length > 5)
+            
+            if(Password != null)
             {
-                string json = JsonConvert.SerializeObject(registerRequest, Formatting.Indented);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                try
+                if (Password.Length > 5)
                 {
-                    Debug.WriteLine(Urls.HOST + "/" + Urls.CREATE_USER);
-                    Uri uri = new Uri(Urls.HOST + "/" + Urls.CREATE_USER);
-                    Debug.WriteLine(uri.ToString());
-                    HttpResponseMessage response = await client.PostAsync(uri, content);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine(responseBody);
-                    await NavigationService.PushAsync<ConnectionPage>();
+                    if (Email != null && FirstName != null && LastName != null)
+                    {
+                        string json = JsonConvert.SerializeObject(registerRequest, Formatting.Indented);
+                        StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                        try
+                        {
+                            Debug.WriteLine(Urls.HOST + "/" + Urls.CREATE_USER);
+                            Uri uri = new Uri(Urls.HOST + "/" + Urls.CREATE_USER);
+                            Debug.WriteLine(uri.ToString());
+                            HttpResponseMessage response = await client.PostAsync(uri, content);
+                            response.EnsureSuccessStatusCode();
+                            string responseBody = await response.Content.ReadAsStringAsync();
+                            Debug.WriteLine(responseBody);
+                            await NavigationService.PushAsync<ConnectionPage>();
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex.Message);
+                            await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
+                        }
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Erreur", "Les champs ne doivent pas être vide", "OK");
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Debug.WriteLine(ex.Message);
-                    await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
+                    await Application.Current.MainPage.DisplayAlert("Erreur", "Votre mot de passe doit comporter au moins 6 caractères", "OK");
                 }
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Erreur", "Votre mot de passe doit comporter au moins 6 caractères", "OK");
+                await Application.Current.MainPage.DisplayAlert("Erreur", "Veuillez rentrer un mot de passe", "OK");
             }
+            
             
         }
 
