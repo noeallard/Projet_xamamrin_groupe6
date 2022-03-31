@@ -9,6 +9,9 @@
             <Entry Placeholder="Description"
                    Text="{Binding Description}"></Entry>
             <Button Text="Ajouter projet"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="40"
                     Command="{Binding OnClickAddProjectButton}"/>
         </StackLayout>
     </ContentPage.Content>
