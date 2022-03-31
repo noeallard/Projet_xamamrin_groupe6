@@ -73,7 +73,7 @@ namespace TimeTracker.Apps.ViewModels
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     LoginResponse loginResponse = JsonConvert.DeserializeObject<LoginResponse>(parsedObject["data"].ToString());
-
+                    Debug.WriteLine(responseBody);
                     Debug.WriteLine(loginResponse.AccessToken);
                     Preferences.Set("access_token", loginResponse.AccessToken);
                     Preferences.Set("refresh_token", loginResponse.RefreshToken);
@@ -85,6 +85,7 @@ namespace TimeTracker.Apps.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                await Application.Current.MainPage.DisplayAlert("Erreur", "Pseudo ou mot de passe incorrect", "OK");
             }
 
         }
