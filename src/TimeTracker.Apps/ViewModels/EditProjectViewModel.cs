@@ -50,7 +50,7 @@ namespace TimeTracker.Apps.ViewModels
                 {
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
                 }
-                HttpResponseMessage response = await client.PostAsync(uri, content);
+                HttpResponseMessage response = await client.PutAsync(uri, content);
                 response.EnsureSuccessStatusCode();
 
                 if (response.IsSuccessStatusCode)
