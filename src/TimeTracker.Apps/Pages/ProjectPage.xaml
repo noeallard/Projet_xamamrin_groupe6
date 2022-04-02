@@ -37,7 +37,15 @@
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickAddButton}"
                 />
-        
+        <Button Text="modifier projet"
+                Grid.Row="2"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    Command="{Binding OnClickSetProjectButton}"
+                />
+
+
     </Grid>
         
     

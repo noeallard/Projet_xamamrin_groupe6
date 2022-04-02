@@ -24,6 +24,7 @@ namespace TimeTracker.Apps.ViewModels
             _tasks = tasks;
             _projectId = projectId;
             OnClickAddButton = new Command(onClickAddButton);
+            OnClickSetProjectButton = new Command(onClickSetProjectButton);
             CommandTask();
         }
 
@@ -80,6 +81,18 @@ namespace TimeTracker.Apps.ViewModels
         {
             var addTaskPage = new AddTaskPage(_tasks,_projectId);
             await NavigationService.PushAsync(addTaskPage);
+        }
+
+
+        public async void onClickSetProjectButton()
+        {
+            var editProjectPage = new EditProjectPage(_projectId);
+            await NavigationService.PushAsync(editProjectPage);
+        }
+
+        public Command OnClickSetProjectButton 
+        {
+            get;
         }
     }
 }

@@ -53,5 +53,10 @@ namespace TimeTracker.Apps.Models
             set;
         }
 
+        public Command OnClickSetButton
+        {
+            get;
+            set;
+        }
     }
 }
