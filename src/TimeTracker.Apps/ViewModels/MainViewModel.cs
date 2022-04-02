@@ -14,6 +14,9 @@ using TimeTracker.Dtos.Authentications.Credentials;
 using TimeTracker.Dtos.Projects;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Microcharts;
+using Entry = Microcharts.ChartEntry;
+using SkiaSharp;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -21,7 +24,19 @@ namespace TimeTracker.Apps.ViewModels
     {
         HttpClient client;
         private ObservableCollection<Project> _projects;
+        private List<Entry> _entries;
+        private PieChart _chart;
 
+        public PieChart Chart
+        {
+            get => _chart;
+            set => SetProperty(ref _chart, value);
+        }
+        public List<Entry> Entries
+        {
+            get => _entries;
+            set => SetProperty(ref _entries, value);
+        }
         public ObservableCollection<Project> Projects
         {
             get => _projects;
@@ -33,6 +48,7 @@ namespace TimeTracker.Apps.ViewModels
             OnClickAddButton = new Command(onClickAddButton);
             client = new HttpClient();
             _projects = new ObservableCollection<Project>();
+            _entries = new List<Entry>();
             loadListProject();
         }
 
@@ -58,7 +74,18 @@ namespace TimeTracker.Apps.ViewModels
                         projets[i].OnClickDelete = new Command<Project>(DeleteProject);
                         projets[i].OnClickTask = new Command<Project>(GoToProjectPage);
                         _projects.Add(projets[i]);
+                        Random r = new Random();
+                        Color color = Color.FromRgb(r.Next(0, 256), r.Next(0, 256), r.Next(0, 256));
+                        _entries.Add(new Entry(projets[i].TotalSecond + i * 2)
+                        {
+                            Color = new SKColor(((byte)r.Next(0, 256)), (byte)r.Next(0, 256), (byte)r.Next(0, 256)),
+                            Label = projets[i].Name,
+                            ValueLabel = projets[i].TotalSecond.ToString()
+                        }); ; ; ; 
                     }
+                    PieChart donut = new PieChart();
+                    donut.Entries = _entries;
+                    Chart = donut;
                 }
             }
             catch (Exception ex)

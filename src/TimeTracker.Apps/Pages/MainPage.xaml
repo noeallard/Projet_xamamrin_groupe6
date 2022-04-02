@@ -2,7 +2,7 @@
 <forms:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms" 
-                       xmlns:Models="clr-namespace:TimeTracker.Apps.Models" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:MainViewModel"
+                       xmlns:Models="clr-namespace:TimeTracker.Apps.Models" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" x:DataType="viewmodels:MainViewModel"
                        x:Class="TimeTracker.Apps.Pages.MainPage">
 
     <ContentPage.Resources>
@@ -36,14 +36,16 @@
             </ViewCell>
         </DataTemplate>
     </ContentPage.Resources>
-
+    
     <Grid RowDefinitions="*, auto,auto" Margin="12,0,12,20">
+        
         <ListView x:Name="mainList"
                   ItemsSource="{Binding Projects}"
                   Grid.Row="0"
                   HasUnevenRows="True"
                   ItemTemplate="{StaticResource ProjectTemplate}"
                   />
+        <microcharts:ChartView x:Name="chartView"  HeightRequest="100" Scale="0.5" Chart="{Binding Chart}" />
         <Button Text="Ajouter"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
