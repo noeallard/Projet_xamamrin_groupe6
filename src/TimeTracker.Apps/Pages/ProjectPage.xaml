@@ -11,18 +11,36 @@
                     <Button Text="plus" 
                             Command="{Binding OnClickAffTask}"
                             CommandParameter="{Binding .}"></Button>
+                    <Button Text="supprimer" 
+                            Command="{Binding OnClickDeleteTask}"
+                            CommandParameter="{Binding .}"></Button>
+                    
                 </StackLayout>
             </ViewCell>
 
 
         </DataTemplate>
+        
     </ContentPage.Resources>
+    <Grid>
         <ListView x:Name="taskList"
                   ItemsSource="{Binding Tasks}"
                   Grid.Row="0"
                   HasUnevenRows="True"
                   ItemTemplate="{StaticResource TaskTemplate}"
                   />
+        <Button Text="Ajouter"
+                BackgroundColor="LightSkyBlue"
+                CornerRadius="10"
+                HeightRequest="44"
+                Grid.Row="1"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding OnClickAddButton}"
+                />
+        
+    </Grid>
+        
+    
 
 
     

@@ -21,6 +21,11 @@ namespace TimeTracker.Dtos.Projects
             get;
             set;
         }
+        public Command OnClickDeleteTask
+        {
+            get;
+            set;
+        }
     }
 
     
