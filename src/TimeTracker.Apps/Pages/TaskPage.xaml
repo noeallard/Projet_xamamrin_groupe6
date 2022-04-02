@@ -1,9 +1,32 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:TaskViewModel"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:projects="clr-namespace:TimeTracker.Dtos.Projects;assembly=TimeTracker.Dtos" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:TaskViewModel"
              x:Class="TimeTracker.Apps.Pages.TaskPage">
-    <StackLayout>
-        <Label Text="{Binding Name}"></Label>
+    <ContentPage.Resources>
+        <DataTemplate x:DataType="projects:TimeItem" x:Key="TimeTemplate">
+            <ViewCell>
+                <StackLayout>
+                    <Label Text="{Binding Difference}"></Label>
+                </StackLayout>
+            </ViewCell>
+
+
+        </DataTemplate>
+    </ContentPage.Resources>
+    <StackLayout HorizontalOptions="FillAndExpand" Padding="20,20,20,0">
+        <Label FontSize="22" HorizontalOptions="Center" Text="{Binding Name}"></Label>
+
+        <ListView x:Name="timeList"
+                  ItemsSource="{Binding Times}"
+                  ItemTemplate="{StaticResource TimeTemplate}"
+                  />
+        <Button Text="{Binding NameButton}"
+                    Command="{Binding OnClickAddTimeButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    Margin="0,30,0,25"></Button>
     </StackLayout>
 
 
