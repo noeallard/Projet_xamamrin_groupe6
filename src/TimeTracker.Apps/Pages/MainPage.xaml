@@ -64,7 +64,7 @@
                 HeightRequest="44"
                 Grid.Row="2"
                 HorizontalOptions="FillAndExpand"
-                Command="{Binding ButtonClicked}"
+                Command="{Binding ButtonPopupChart}"
                 />
         <Button Text="Mon profil"
                 BackgroundColor="LightSkyBlue"

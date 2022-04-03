@@ -17,6 +17,7 @@ using Entry = Microcharts.ChartEntry;
 using SkiaSharp;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Rg.Plugins.Popup.Extensions;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -80,7 +81,10 @@ namespace TimeTracker.Apps.ViewModels
                     ValueLabel = second.ToString()
                 }); ; ; ;
             }
-            PieChart donut = new PieChart();
+            PieChart donut = new PieChart()
+            {
+                LabelTextSize = 35
+            };
             donut.Entries = _entries;
             Chart = donut;
 
@@ -172,5 +176,7 @@ namespace TimeTracker.Apps.ViewModels
         {
             get;
         }
+
+        public Command ButtonPopupChart => new Command(async () => await Application.Current.MainPage.Navigation.PushPopupAsync(new ProjectPageModal(_tasks,_project)));
     }
 }

@@ -39,14 +39,13 @@
         </DataTemplate>
         
     </ContentPage.Resources>
-    <Grid  RowDefinitions="*, auto,auto" Margin="12,0,12,20">
+    <Grid  RowDefinitions="*, auto,auto,auto" Margin="12,0,12,20">
         <ListView x:Name="taskList"
                   ItemsSource="{Binding Tasks}"
                   Grid.Row="0"
                   HasUnevenRows="True"
                   ItemTemplate="{StaticResource TaskTemplate}"
                   />
-        <microcharts:ChartView x:Name="chartView"  HeightRequest="100" Scale="0.5" Chart="{Binding Chart}" />
         <Button Text="Ajouter"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
@@ -55,8 +54,16 @@
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickAddButton}"
                 />
-        <Button Text="modifier projet"
+        <Button Text="Graphique"
+                BackgroundColor="LightSkyBlue"
+                CornerRadius="10"
+                HeightRequest="44"
                 Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding ButtonPopupChart}"
+                />
+        <Button Text="modifier projet"
+                Grid.Row="3"
                     BackgroundColor="LightSkyBlue"
                     CornerRadius="10"
                     HeightRequest="40"

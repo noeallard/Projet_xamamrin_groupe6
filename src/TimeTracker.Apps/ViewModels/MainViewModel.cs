@@ -221,6 +221,6 @@ namespace TimeTracker.Apps.ViewModels
             await NavigationService.PushAsync<ProfilePage>();
         }
 
-        public Command ButtonClicked => new Command(async () => await Application.Current.MainPage.Navigation.PushPopupAsync(new MainPageModal()));
+        public Command ButtonPopupChart => new Command(async () => await Application.Current.MainPage.Navigation.PushPopupAsync(new MainPageModal()));
     }
 }
