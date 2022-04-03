@@ -26,7 +26,13 @@ namespace TimeTracker.Apps.ViewModels
         private ObservableCollection<Project> _projects;
         private List<Entry> _entries;
         private PieChart _chart;
+        private int _localTotalSecond;
 
+        public int LocalTotalSecond
+        {
+            get => _localTotalSecond;
+            set => SetProperty(ref _localTotalSecond, value);
+        }
         public PieChart Chart
         {
             get => _chart;
@@ -73,15 +79,24 @@ namespace TimeTracker.Apps.ViewModels
                     {
                         projets[i].OnClickDelete = new Command<Project>(DeleteProject);
                         projets[i].OnClickTask = new Command<Project>(GoToProjectPage);
+                        getRealTotalSecond(projets[i]);
+                        Debug.WriteLine("local total second "+_localTotalSecond);
+                        projets[i].TotalSecond = LocalTotalSecond;
+                        Debug.WriteLine("TETEGBEHJBEHJHEJHE "+projets[i].TotalSecond);
                         _projects.Add(projets[i]);
                         Random r = new Random();
                         Color color = Color.FromRgb(r.Next(0, 256), r.Next(0, 256), r.Next(0, 256));
-                        _entries.Add(new Entry(projets[i].TotalSecond + i * 2)
+                        Debug.WriteLine("DDDDDDDDDDDDD " +projets[i].TotalSecond);
+                        _entries.Add(new Entry(projets[i].TotalSecond)
                         {
                             Color = new SKColor(((byte)r.Next(0, 256)), (byte)r.Next(0, 256), (byte)r.Next(0, 256)),
                             Label = projets[i].Name,
                             ValueLabel = projets[i].TotalSecond.ToString()
                         }); ; ; ; 
+                    }
+                    foreach(var entry in _entries)
+                    {
+                        Debug.WriteLine(entry.Label+" "+entry.ValueLabel);
                     }
                     PieChart donut = new PieChart();
                     donut.Entries = _entries;
@@ -93,6 +108,44 @@ namespace TimeTracker.Apps.ViewModels
                 Debug.WriteLine(ex.Message);
             }
 
+        }
+
+        public async void getRealTotalSecond(Project project)
+        {
+            try
+            {
+                client = new HttpClient();
+                Uri uri = new Uri((Urls.HOST + "/" + Urls.LIST_TASKS).Replace("{projectId}", project.Id.ToString()));
+                if (!client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                }
+                HttpResponseMessage response = await client.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var parsedObject = JObject.Parse(responseBody);
+                    ObservableCollection<TaskItem> tasks = JsonConvert.DeserializeObject<ObservableCollection<TaskItem>>(parsedObject["data"].ToString());
+                    foreach(var task in tasks)
+                    {
+                        foreach(var time in task.Times)
+                        {
+                            TimeSpan diff = time.EndTime.Subtract(time.StartTime);
+                            time.Difference = new TimeSpan(diff.Hours, diff.Minutes, diff.Seconds);
+                            project.TotalSecond += (int) time.Difference.TotalSeconds;
+                        }
+                    }
+                    Debug.WriteLine("FFFIIINNN " + project.TotalSecond);
+                    LocalTotalSecond = project.TotalSecond;
+                    Debug.WriteLine("local fin de fonction " + LocalTotalSecond);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         public Command OnClickAddButton
