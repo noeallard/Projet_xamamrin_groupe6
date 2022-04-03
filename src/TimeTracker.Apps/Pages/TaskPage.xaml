@@ -15,7 +15,7 @@
     </ContentPage.Resources>
     <StackLayout HorizontalOptions="FillAndExpand" Padding="20,20,20,0">
         <Label FontSize="22" HorizontalOptions="Center" Text="{Binding Name}"></Label>
-
+        <Label FontSize="18" HorizontalOptions="Center" Text="Historique des temps"></Label>
         <ListView x:Name="timeList"
                   ItemsSource="{Binding Times}"
                   ItemTemplate="{StaticResource TimeTemplate}"

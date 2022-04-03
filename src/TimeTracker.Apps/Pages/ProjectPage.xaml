@@ -12,7 +12,6 @@
             <ViewCell>
                 <StackLayout>
                     <Label Text="{Binding Name }"></Label>
-                    <Label Text="{Binding Id}"></Label>
                     <Grid ColumnDefinitions="*,*" >
                         <Button Text="plus"
                                 Grid.Column="0"
