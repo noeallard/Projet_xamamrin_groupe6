@@ -15,6 +15,8 @@ using TimeTracker.Apps.Models;
 using Microcharts;
 using Entry = Microcharts.ChartEntry;
 using SkiaSharp;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -60,6 +62,7 @@ namespace TimeTracker.Apps.ViewModels
 
         public void loadChart()
         {
+            refreshTasks();
             foreach (var task in _tasks)
             {
                 int second = 0;
@@ -95,6 +98,32 @@ namespace TimeTracker.Apps.ViewModels
         {
             var taskPage = new TaskPage(task,_project);
             await NavigationService.PushAsync(taskPage);
+        }
+
+        public async void refreshTasks()
+        {
+            try
+            {
+                Uri uri = new Uri((Urls.HOST + "/" + Urls.LIST_TASKS).Replace("{projectId}", _project.Id.ToString()));
+                if (!client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
+                }
+                HttpResponseMessage response = await client.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("AAAAAGJHGHJBHKDSHDSDJS");
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var parsedObject = JObject.Parse(responseBody);
+                    ObservableCollection<TaskItem> tasks = JsonConvert.DeserializeObject<ObservableCollection<TaskItem>>(parsedObject["data"].ToString());
+                    _tasks = tasks;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
         public async void DeleteTask(TaskItem task)
         {
