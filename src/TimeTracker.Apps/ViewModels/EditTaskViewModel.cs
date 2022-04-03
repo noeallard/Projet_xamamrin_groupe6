@@ -65,8 +65,7 @@ namespace TimeTracker.Apps.ViewModels
                     var parsedObject = JObject.Parse(responseBody);
                     Debug.WriteLine(response);
                     _task.Name = Name;
-                    var taskPage = new TaskPage(_task, _project);
-                    await NavigationService.PushAsync(taskPage);
+                    await NavigationService.PushAsync<MainPage>();
                 }
 
 
