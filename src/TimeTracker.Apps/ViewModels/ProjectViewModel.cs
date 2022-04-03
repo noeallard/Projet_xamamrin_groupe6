@@ -12,6 +12,9 @@ using System.Net.Http;
 using TimeTracker.Dtos;
 using Xamarin.Essentials;
 using TimeTracker.Apps.Models;
+using Microcharts;
+using Entry = Microcharts.ChartEntry;
+using SkiaSharp;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -20,16 +23,30 @@ namespace TimeTracker.Apps.ViewModels
         private ObservableCollection<TaskItem> _tasks;
         private Project _project;
         HttpClient client;
+        private PieChart _chart;
+        private List<Entry> _entries;
         public ProjectViewModel(ObservableCollection<TaskItem> tasks, Project project)
         {
             _tasks = tasks;
             _project = project;
             OnClickAddButton = new Command(onClickAddButton);
             OnClickSetProjectButton = new Command(onClickSetProjectButton);
+            _entries = new List<Entry>();
             CommandTask();
+            loadChart();
         }
 
+        public PieChart Chart
+        {
+            get => _chart;
+            set => SetProperty(ref _chart, value);
+        }
 
+        public List<Entry> Entries
+        {
+            get => _entries;
+            set => SetProperty(ref _entries, value);
+        }
         public String Title
         {
             get => _project.Name;
@@ -39,6 +56,31 @@ namespace TimeTracker.Apps.ViewModels
         {
             get => _tasks;
             set => SetProperty(ref _tasks, value);
+        }
+
+        public void loadChart()
+        {
+            foreach (var task in _tasks)
+            {
+                int second = 0;
+                foreach (var time in task.Times)
+                {
+                    TimeSpan diff = time.EndTime.Subtract(time.StartTime);
+                    time.Difference = new TimeSpan(diff.Hours, diff.Minutes, diff.Seconds);
+                    second += (int)time.Difference.TotalSeconds;
+                }
+                Random r = new Random();
+                _entries.Add(new Entry(second)
+                {
+                    Color = new SKColor(((byte)r.Next(0, 256)), (byte)r.Next(0, 256), (byte)r.Next(0, 256)),
+                    Label = task.Name,
+                    ValueLabel = second.ToString()
+                }); ; ; ;
+            }
+            PieChart donut = new PieChart();
+            donut.Entries = _entries;
+            Chart = donut;
+
         }
         public void CommandTask()
         {

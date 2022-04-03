@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:projects="clr-namespace:TimeTracker.Dtos.Projects;assembly=TimeTracker.Dtos" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:ProjectViewModel"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:projects="clr-namespace:TimeTracker.Dtos.Projects;assembly=TimeTracker.Dtos" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" x:DataType="viewmodels:ProjectViewModel"
              x:Class="TimeTracker.Apps.Pages.ProjectPage">
     <NavigationPage.TitleView>
         <StackLayout>
@@ -46,6 +46,7 @@
                   HasUnevenRows="True"
                   ItemTemplate="{StaticResource TaskTemplate}"
                   />
+        <microcharts:ChartView x:Name="chartView"  HeightRequest="100" Scale="0.5" Chart="{Binding Chart}" />
         <Button Text="Ajouter"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
