@@ -24,7 +24,6 @@ namespace TimeTracker.Apps.ViewModels
         private string _timer;
         private Project _project;
         private long _Id;
-        private int _projectId;
         private ObservableCollection<TimeItem> _times;
         HttpClient client;
         private DateTime _startTime;
@@ -64,12 +63,11 @@ namespace TimeTracker.Apps.ViewModels
             get => _timer;
             set => SetProperty(ref _timer, value);
         }
-        public TaskViewModel(TaskItem task,int projectId, Project project)
+        public TaskViewModel(TaskItem task, Project project)
         {
             _task = task;
             _name = task.Name;
             _Id = task.Id;
-            _projectId = projectId;
             _times = convertList(_task, task.Times);
             client = new HttpClient();
             OnClickAddTimeButton = new Command(onClickAddTimeButton);
@@ -133,7 +131,7 @@ namespace TimeTracker.Apps.ViewModels
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 try
                 {
-                    Uri uri = new Uri((Urls.HOST + "/" + Urls.ADD_TIME).Replace("{projectId}", _projectId.ToString()).Replace("{taskId}", _Id.ToString()));
+                    Uri uri = new Uri((Urls.HOST + "/" + Urls.ADD_TIME).Replace("{projectId}", _project.Id.ToString()).Replace("{taskId}", _Id.ToString()));
                     if (!client.DefaultRequestHeaders.Contains("Authorization"))
                     {
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));

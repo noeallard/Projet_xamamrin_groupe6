@@ -18,27 +18,17 @@ namespace TimeTracker.Apps.ViewModels
     public class ProjectViewModel : ViewModelBase
     {
         private ObservableCollection<TaskItem> _tasks;
-        private int _projectId;
         private Project _project;
         HttpClient client;
-        public ProjectViewModel(ObservableCollection<TaskItem> tasks,int projectId, Project project)
+        public ProjectViewModel(ObservableCollection<TaskItem> tasks, Project project)
         {
             _tasks = tasks;
-            _projectId = projectId;
             _project = project;
             OnClickAddButton = new Command(onClickAddButton);
             OnClickSetProjectButton = new Command(onClickSetProjectButton);
             CommandTask();
         }
 
-        public ProjectViewModel(ObservableCollection<TaskItem> tasks, int projectId)
-        {
-            _tasks = tasks;
-            _projectId = projectId;
-            OnClickAddButton = new Command(onClickAddButton);
-            OnClickSetProjectButton = new Command(onClickSetProjectButton);
-            CommandTask();
-        }
 
         public String Title
         {
@@ -61,7 +51,7 @@ namespace TimeTracker.Apps.ViewModels
 
         public async void GoToTaskPage(TaskItem task)
         {
-            var taskPage = new TaskPage(task,_projectId,_project);
+            var taskPage = new TaskPage(task,_project);
             await NavigationService.PushAsync(taskPage);
         }
         public async void DeleteTask(TaskItem task)
@@ -69,7 +59,7 @@ namespace TimeTracker.Apps.ViewModels
             try
             {
                 client = new HttpClient();
-                Uri uri = new Uri((Urls.HOST + "/" + Urls.DELETE_TASK).Replace("{projectId}", _projectId.ToString()).Replace("{taskId}", task.Id.ToString()));
+                Uri uri = new Uri((Urls.HOST + "/" + Urls.DELETE_TASK).Replace("{projectId}", _project.Id.ToString()).Replace("{taskId}", task.Id.ToString()));
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
                 HttpResponseMessage response = await client.DeleteAsync(uri);
                 response.EnsureSuccessStatusCode();
@@ -96,14 +86,14 @@ namespace TimeTracker.Apps.ViewModels
 
         public async void onClickAddButton()
         {
-            var addTaskPage = new AddTaskPage(_tasks,_projectId, _project);
+            var addTaskPage = new AddTaskPage(_tasks, _project);
             await NavigationService.PushAsync(addTaskPage);
         }
 
 
         public async void onClickSetProjectButton()
         {
-            var editProjectPage = new EditProjectPage(_projectId);
+            var editProjectPage = new EditProjectPage(_project.Id);
             await NavigationService.PushAsync(editProjectPage);
         }
 

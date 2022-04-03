@@ -23,7 +23,6 @@ namespace TimeTracker.Apps.ViewModels
         HttpClient client;
         private Project _Project;
         private String _name;
-        private int _ProjectId;
         private ObservableCollection<TaskItem> _tasks;
 
 
@@ -36,8 +35,7 @@ namespace TimeTracker.Apps.ViewModels
             }
         }
         public int ProjectId{
-            get { return _ProjectId; }
-            set {SetProperty(ref _ProjectId, value); }
+            get { return _Project.Id; }
         }
         public ObservableCollection<TaskItem> Tasks
         {
@@ -60,7 +58,7 @@ namespace TimeTracker.Apps.ViewModels
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             try
             {
-                Uri uri = new Uri((Urls.HOST + "/" + Urls.CREATE_TASK).Replace("{projectId}", ProjectId.ToString()));
+                Uri uri = new Uri((Urls.HOST + "/" + Urls.CREATE_TASK).Replace("{projectId}", _Project.Id.ToString()));
                 if (!client.DefaultRequestHeaders.Contains("Authorization"))
                 {
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
@@ -76,7 +74,7 @@ namespace TimeTracker.Apps.ViewModels
                     TaskItem taskItem = JsonConvert.DeserializeObject<TaskItem>(parsedObject["data"].ToString());
                     Debug.WriteLine(taskItem.Name);
                     Tasks.Add(taskItem);
-                    var projectPage = new ProjectPage(_tasks, _ProjectId, _Project);
+                    var projectPage = new ProjectPage(_tasks, _Project);
                     await NavigationService.PushAsync(projectPage);
                 }
 
@@ -88,12 +86,11 @@ namespace TimeTracker.Apps.ViewModels
             }
 
         }
-        public AddTaskViewModel( ObservableCollection<TaskItem> tasks, int projectId, Project project)
+        public AddTaskViewModel( ObservableCollection<TaskItem> tasks, Project project)
         {
             client = new HttpClient();
             _Project = project;
             OnClickAddTaskButton = new Command(onClickAddTaskButton);
-            ProjectId = projectId;
             Tasks = tasks;
             
         }

@@ -16,10 +16,10 @@ namespace TimeTracker.Apps.Pages
     public partial class AddTaskPage : ContentPage
     {
 
-        public AddTaskPage(ObservableCollection<TaskItem> tasks,int projectId, Project project)
+        public AddTaskPage(ObservableCollection<TaskItem> tasks, Project project)
         {
             InitializeComponent();
-            BindingContext = new AddTaskViewModel(tasks,projectId, project);
+            BindingContext = new AddTaskViewModel(tasks, project);
         }
     }
 }

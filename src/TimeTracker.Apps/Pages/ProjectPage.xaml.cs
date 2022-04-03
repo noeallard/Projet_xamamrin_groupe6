@@ -16,19 +16,12 @@ namespace TimeTracker.Apps.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectPage : ContentPage
     {
-        public ProjectPage(ObservableCollection<TaskItem> tasks,int projectId, Project project)
+        public ProjectPage(ObservableCollection<TaskItem> tasks, Project project)
         {
             InitializeComponent();
-            BindingContext = new ProjectViewModel(tasks,projectId, project);
+            BindingContext = new ProjectViewModel(tasks, project);
 
             
-        }
-        public ProjectPage(ObservableCollection<TaskItem> tasks, int projectId)
-        {
-            InitializeComponent();
-            BindingContext = new ProjectViewModel(tasks, projectId);
-
-
         }
     }
 }
