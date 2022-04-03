@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using Newtonsoft.Json;
 using System.Text;
 using TimeTracker.Apps.Models;
+using TimeTracker.Apps.Pages;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -71,6 +72,7 @@ namespace TimeTracker.Apps.ViewModels
             _times = convertList(_task, task.Times);
             client = new HttpClient();
             OnClickAddTimeButton = new Command(onClickAddTimeButton);
+            OnClickEditButton = new Command(onClickEditButton);
             _nameButton = "Démarrer";
             _start = false;
             _timer = "";
@@ -96,6 +98,16 @@ namespace TimeTracker.Apps.ViewModels
             get;
         }
 
+        public Command OnClickEditButton
+        {
+            get;
+        }
+
+        public async void onClickEditButton()
+        {
+            var editTaskPage = new EditTaskPage(_task, _project);
+            await NavigationService.PushAsync(editTaskPage);
+        }
         public async void onClickAddTimeButton()
         {
             if (NameButton == "Démarrer")

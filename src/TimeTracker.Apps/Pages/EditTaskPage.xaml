@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeTracker.Apps.Pages.EditTaskPage">
+  <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" Padding="20,20,20,0">
+            <Frame BackgroundColor="LightSkyBlue" HeightRequest="34" CornerRadius="5">
+                <Label Text="Informations de la tâche" HorizontalOptions="Center" FontSize="26"></Label>
+            </Frame>
+
+            <Entry Placeholder="Nouveau nom"
+                   Text="{Binding Name}"></Entry>
+            
+            <Button Text="Appliquer changements"
+                    Command="{Binding OnClickEditButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="34"/>
+        </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

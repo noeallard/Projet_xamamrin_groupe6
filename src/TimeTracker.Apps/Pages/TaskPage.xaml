@@ -20,6 +20,13 @@
                   ItemsSource="{Binding Times}"
                   ItemTemplate="{StaticResource TimeTemplate}"
                   />
+        <Button Text="Modifier"
+                    Command="{Binding OnClickEditButton}"
+                    FontSize="12"
+                    BackgroundColor="LightSkyBlue"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    ></Button>
         <Button Text="{Binding NameButton}"
                     Command="{Binding OnClickAddTimeButton}"
                     FontSize="12"
