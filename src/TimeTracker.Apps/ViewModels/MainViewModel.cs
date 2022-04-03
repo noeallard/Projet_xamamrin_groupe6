@@ -57,6 +57,7 @@ namespace TimeTracker.Apps.ViewModels
             _projects = new ObservableCollection<Project>();
             _entries = new List<Entry>();
             loadListProject();
+            loadChart();
         }
 
         public async void loadListProject()
@@ -72,7 +73,6 @@ namespace TimeTracker.Apps.ViewModels
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine("AAAAAGJHGHJBHKDSHDSDJS");
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     ObservableCollection<Project> projets = JsonConvert.DeserializeObject<ObservableCollection<Project>>(parsedObject["data"].ToString());
@@ -80,32 +80,10 @@ namespace TimeTracker.Apps.ViewModels
                     {
                         projets[i].OnClickDelete = new Command<Project>(DeleteProject);
                         projets[i].OnClickTask = new Command<Project>(GoToProjectPage);
-                        getRealTotalSecond(projets[i]);
-                        Debug.WriteLine("local total second "+_localTotalSecond);
-                        projets[i].TotalSecond = LocalTotalSecond;
-                        Debug.WriteLine("TETEGBEHJBEHJHEJHE "+projets[i].TotalSecond);
                         _projects.Add(projets[i]);
-                        Random r = new Random();
-                        Color color = Color.FromRgb(r.Next(0, 256), r.Next(0, 256), r.Next(0, 256));
-                        Debug.WriteLine("DDDDDDDDDDDDD " +projets[i].TotalSecond);
-                        _entries.Add(new Entry(projets[i].TotalSecond)
-                        {
-                            Color = new SKColor(((byte)r.Next(0, 256)), (byte)r.Next(0, 256), (byte)r.Next(0, 256)),
-                            Label = projets[i].Name,
-                            ValueLabel = projets[i].TotalSecond.ToString()
-                        }); ; ; ; 
                     }
-                    foreach(var entry in _entries)
-                    {
-                        Debug.WriteLine(entry.Label+" "+entry.ValueLabel);
-                    }
-                    PieChart donut = new PieChart()
-                    {
-                        LabelTextSize = 40
-                    };
-                    donut.Entries = _entries;
-                    Chart = donut;
                 }
+                loadChart();
             }
             catch (Exception ex)
             {
@@ -114,6 +92,20 @@ namespace TimeTracker.Apps.ViewModels
 
         }
 
+        public void loadChart()
+        {
+            for (int i = 0; i < _projects.Count; i++)
+            {
+                getRealTotalSecond(_projects[i]);
+            }
+            PieChart donut = new PieChart()
+            {
+                LabelTextSize = 40
+            };
+            donut.Entries = _entries;
+            Chart = donut;
+
+        }
         public async void getRealTotalSecond(Project project)
         {
             try
@@ -140,9 +132,15 @@ namespace TimeTracker.Apps.ViewModels
                             project.TotalSecond += (int) time.Difference.TotalSeconds;
                         }
                     }
-                    Debug.WriteLine("FFFIIINNN " + project.TotalSecond);
-                    LocalTotalSecond = project.TotalSecond;
-                    Debug.WriteLine("local fin de fonction " + LocalTotalSecond);
+                    _localTotalSecond = project.TotalSecond;
+                    Random r = new Random();
+                    Color color = Color.FromRgb(r.Next(0, 256), r.Next(0, 256), r.Next(0, 256));
+                    _entries.Add(new Entry(project.TotalSecond)
+                    {
+                        Color = new SKColor(((byte)r.Next(0, 256)), (byte)r.Next(0, 256), (byte)r.Next(0, 256)),
+                        Label = project.Name,
+                        ValueLabel = project.TotalSecond.ToString()
+                    }); ; ; ;
                 }
 
             }
@@ -220,7 +218,6 @@ namespace TimeTracker.Apps.ViewModels
         {
             await NavigationService.PushAsync<ProfilePage>();
         }
-
         public Command ButtonPopupChart => new Command(async () => await Application.Current.MainPage.Navigation.PushPopupAsync(new MainPageModal()));
     }
 }
