@@ -4,7 +4,11 @@
                  xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms" 
                        xmlns:Models="clr-namespace:TimeTracker.Apps.Models" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" x:DataType="viewmodels:MainViewModel"
                        x:Class="TimeTracker.Apps.Pages.MainPage">
-
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <Label Text="Time Tracker" TextColor="White" HorizontalTextAlignment="Center" FontSize="20" Margin="0, 0, 19, 0" />
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.Resources>
         <DataTemplate x:DataType="Models:Project" x:Key="ProjectTemplate">
             <ViewCell>
