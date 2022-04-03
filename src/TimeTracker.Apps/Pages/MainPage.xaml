@@ -41,7 +41,7 @@
         </DataTemplate>
     </ContentPage.Resources>
     
-    <Grid RowDefinitions="*, auto,auto" Margin="12,0,12,20">
+    <Grid RowDefinitions="*, auto,auto,auto" Margin="12,0,12,20">
         
         <ListView x:Name="mainList"
                   ItemsSource="{Binding Projects}"
@@ -49,7 +49,7 @@
                   HasUnevenRows="True"
                   ItemTemplate="{StaticResource ProjectTemplate}"
                   />
-        <microcharts:ChartView x:Name="chartView"  HeightRequest="100" Scale="0.5" Chart="{Binding Chart}" />
+        
         <Button Text="Ajouter"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
@@ -58,11 +58,19 @@
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickAddButton}"
                 />
-        <Button Text="Mon profil"
+        <Button Text="Graphique"
                 BackgroundColor="LightSkyBlue"
                 CornerRadius="10"
                 HeightRequest="44"
                 Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding ButtonClicked}"
+                />
+        <Button Text="Mon profil"
+                BackgroundColor="LightSkyBlue"
+                CornerRadius="10"
+                HeightRequest="44"
+                Grid.Row="3"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding OnClickProfileButton}"
                 />

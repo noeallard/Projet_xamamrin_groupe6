@@ -17,6 +17,7 @@ using Xamarin.Forms;
 using Microcharts;
 using Entry = Microcharts.ChartEntry;
 using SkiaSharp;
+using Rg.Plugins.Popup.Extensions;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -98,7 +99,10 @@ namespace TimeTracker.Apps.ViewModels
                     {
                         Debug.WriteLine(entry.Label+" "+entry.ValueLabel);
                     }
-                    PieChart donut = new PieChart();
+                    PieChart donut = new PieChart()
+                    {
+                        LabelTextSize = 40
+                    };
                     donut.Entries = _entries;
                     Chart = donut;
                 }
@@ -216,5 +220,7 @@ namespace TimeTracker.Apps.ViewModels
         {
             await NavigationService.PushAsync<ProfilePage>();
         }
+
+        public Command ButtonClicked => new Command(async () => await Application.Current.MainPage.Navigation.PushPopupAsync(new MainPageModal()));
     }
 }
