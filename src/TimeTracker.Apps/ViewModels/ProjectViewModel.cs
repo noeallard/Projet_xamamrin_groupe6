@@ -93,7 +93,7 @@ namespace TimeTracker.Apps.ViewModels
 
         public async void onClickSetProjectButton()
         {
-            var editProjectPage = new EditProjectPage(_project.Id);
+            var editProjectPage = new EditProjectPage(_project);
             await NavigationService.PushAsync(editProjectPage);
         }
 

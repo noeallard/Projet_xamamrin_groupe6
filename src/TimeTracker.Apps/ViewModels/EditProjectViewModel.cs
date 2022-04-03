@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using TimeTracker.Apps.Models;
 using TimeTracker.Apps.Pages;
 using TimeTracker.Dtos;
 using TimeTracker.Dtos.Projects;
@@ -17,10 +18,10 @@ namespace TimeTracker.Apps.ViewModels
 {
     public class EditProjectViewModel : ViewModelBase
     {
+        private Project _project;
         HttpClient client;
         private String _name;
         private String _description;
-        private int _projectId;
 
         public String Name {
             get {return _name;}
@@ -45,7 +46,7 @@ namespace TimeTracker.Apps.ViewModels
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             try
             {
-                Uri uri = new Uri((Urls.HOST + "/" + Urls.UPDATE_PROJECT).Replace("{projectId}", _projectId.ToString()));
+                Uri uri = new Uri((Urls.HOST + "/" + Urls.UPDATE_PROJECT).Replace("{projectId}", _project.Id.ToString()));
                 if (!client.DefaultRequestHeaders.Contains("Authorization"))
                 {
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Preferences.Get("access_token", "undefiend"));
@@ -68,9 +69,11 @@ namespace TimeTracker.Apps.ViewModels
                 Debug.WriteLine(ex.Message);
             }
         }
-        public EditProjectViewModel(int projectId)
+        public EditProjectViewModel(Project project)
         {
-            _projectId = projectId;
+            _project = project;
+            _name = project.Name;
+            _description = project.Description;
             client = new HttpClient();
             OnClickSetProjectButton = new Command(onClickSetProject);
             
