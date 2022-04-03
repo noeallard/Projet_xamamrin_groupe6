@@ -11,6 +11,7 @@ using TimeTracker.Apps.Pages;
 using System.Net.Http;
 using TimeTracker.Dtos;
 using Xamarin.Essentials;
+using TimeTracker.Apps.Models;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -18,14 +19,30 @@ namespace TimeTracker.Apps.ViewModels
     {
         private ObservableCollection<TaskItem> _tasks;
         private int _projectId;
+        private Project _project;
         HttpClient client;
-        public ProjectViewModel(ObservableCollection<TaskItem> tasks,int projectId)
+        public ProjectViewModel(ObservableCollection<TaskItem> tasks,int projectId, Project project)
+        {
+            _tasks = tasks;
+            _projectId = projectId;
+            _project = project;
+            OnClickAddButton = new Command(onClickAddButton);
+            OnClickSetProjectButton = new Command(onClickSetProjectButton);
+            CommandTask();
+        }
+
+        public ProjectViewModel(ObservableCollection<TaskItem> tasks, int projectId)
         {
             _tasks = tasks;
             _projectId = projectId;
             OnClickAddButton = new Command(onClickAddButton);
             OnClickSetProjectButton = new Command(onClickSetProjectButton);
             CommandTask();
+        }
+
+        public String Title
+        {
+            get => _project.Name;
         }
 
         public ObservableCollection<TaskItem> Tasks
@@ -44,7 +61,7 @@ namespace TimeTracker.Apps.ViewModels
 
         public async void GoToTaskPage(TaskItem task)
         {
-            var taskPage = new TaskPage(task,_projectId);
+            var taskPage = new TaskPage(task,_projectId,_project);
             await NavigationService.PushAsync(taskPage);
         }
         public async void DeleteTask(TaskItem task)
@@ -79,7 +96,7 @@ namespace TimeTracker.Apps.ViewModels
 
         public async void onClickAddButton()
         {
-            var addTaskPage = new AddTaskPage(_tasks,_projectId);
+            var addTaskPage = new AddTaskPage(_tasks,_projectId, _project);
             await NavigationService.PushAsync(addTaskPage);
         }
 

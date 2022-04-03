@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using TimeTracker.Apps.Models;
 using TimeTracker.Apps.Pages;
 using TimeTracker.Dtos;
 using TimeTracker.Dtos.Projects;
@@ -20,6 +21,7 @@ namespace TimeTracker.Apps.ViewModels
     public class AddTaskViewModel : ViewModelBase
     {
         HttpClient client;
+        private Project _Project;
         private String _name;
         private int _ProjectId;
         private ObservableCollection<TaskItem> _tasks;
@@ -74,7 +76,7 @@ namespace TimeTracker.Apps.ViewModels
                     TaskItem taskItem = JsonConvert.DeserializeObject<TaskItem>(parsedObject["data"].ToString());
                     Debug.WriteLine(taskItem.Name);
                     Tasks.Add(taskItem);
-                    var projectPage = new ProjectPage(_tasks, _ProjectId);
+                    var projectPage = new ProjectPage(_tasks, _ProjectId, _Project);
                     await NavigationService.PushAsync(projectPage);
                 }
 
@@ -86,9 +88,10 @@ namespace TimeTracker.Apps.ViewModels
             }
 
         }
-        public AddTaskViewModel( ObservableCollection<TaskItem> tasks, int projectId)
+        public AddTaskViewModel( ObservableCollection<TaskItem> tasks, int projectId, Project project)
         {
             client = new HttpClient();
+            _Project = project;
             OnClickAddTaskButton = new Command(onClickAddTaskButton);
             ProjectId = projectId;
             Tasks = tasks;

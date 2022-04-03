@@ -193,7 +193,7 @@ namespace TimeTracker.Apps.ViewModels
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var parsedObject = JObject.Parse(responseBody);
                     ObservableCollection<TaskItem> tasks = JsonConvert.DeserializeObject<ObservableCollection<TaskItem>>(parsedObject["data"].ToString());
-                    var projectPage = new ProjectPage(tasks,project.Id);
+                    var projectPage = new ProjectPage(tasks,project.Id,project);
                
                     await NavigationService.PushAsync(projectPage);
 

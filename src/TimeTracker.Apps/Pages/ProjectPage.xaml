@@ -2,19 +2,36 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:projects="clr-namespace:TimeTracker.Dtos.Projects;assembly=TimeTracker.Dtos" xmlns:viewmodels="clr-namespace:TimeTracker.Apps.ViewModels" x:DataType="viewmodels:ProjectViewModel"
              x:Class="TimeTracker.Apps.Pages.ProjectPage">
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <Label Text="{Binding Title}" TextColor="White" HorizontalTextAlignment="Center" FontSize="20" Margin="0, 0, 75, 0" />
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.Resources>
         <DataTemplate x:DataType="projects:TaskItem" x:Key="TaskTemplate">
             <ViewCell>
                 <StackLayout>
                     <Label Text="{Binding Name }"></Label>
                     <Label Text="{Binding Id}"></Label>
-                    <Button Text="plus" 
+                    <Grid ColumnDefinitions="*,*" >
+                        <Button Text="plus"
+                                Grid.Column="0"
+                                FontSize="12"
+                                BackgroundColor="LightSkyBlue"
+                                CornerRadius="10"
+                                HeightRequest="34"
                             Command="{Binding OnClickAffTask}"
                             CommandParameter="{Binding .}"></Button>
-                    <Button Text="supprimer" 
+                        <Button Text="supprimer"
+                                Grid.Column="1"
+                                TextColor="White"
+                                FontSize="12"
+                                BackgroundColor="Red"
+                                CornerRadius="10"
+                                HeightRequest="34"
                             Command="{Binding OnClickDeleteTask}"
                             CommandParameter="{Binding .}"></Button>
-                    
+                    </Grid>
                 </StackLayout>
             </ViewCell>
 
@@ -22,7 +39,7 @@
         </DataTemplate>
         
     </ContentPage.Resources>
-    <Grid>
+    <Grid  RowDefinitions="*, auto,auto" Margin="12,0,12,20">
         <ListView x:Name="taskList"
                   ItemsSource="{Binding Tasks}"
                   Grid.Row="0"

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTracker.Apps.Models;
 using TimeTracker.Apps.ViewModels;
 using TimeTracker.Dtos.Projects;
 using Xamarin.Forms;
@@ -15,12 +16,19 @@ namespace TimeTracker.Apps.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectPage : ContentPage
     {
-        public ProjectPage(ObservableCollection<TaskItem> tasks,int projectId)
+        public ProjectPage(ObservableCollection<TaskItem> tasks,int projectId, Project project)
         {
             InitializeComponent();
-            BindingContext = new ProjectViewModel(tasks,projectId);
+            BindingContext = new ProjectViewModel(tasks,projectId, project);
 
             
+        }
+        public ProjectPage(ObservableCollection<TaskItem> tasks, int projectId)
+        {
+            InitializeComponent();
+            BindingContext = new ProjectViewModel(tasks, projectId);
+
+
         }
     }
 }

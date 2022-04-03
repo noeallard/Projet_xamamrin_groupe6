@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using System.Text;
+using TimeTracker.Apps.Models;
 
 namespace TimeTracker.Apps.ViewModels
 {
@@ -21,6 +22,7 @@ namespace TimeTracker.Apps.ViewModels
         private String _name;
         private string _nameButton;
         private string _timer;
+        private Project _project;
         private long _Id;
         private int _projectId;
         private ObservableCollection<TimeItem> _times;
@@ -62,7 +64,7 @@ namespace TimeTracker.Apps.ViewModels
             get => _timer;
             set => SetProperty(ref _timer, value);
         }
-        public TaskViewModel(TaskItem task,int projectId)
+        public TaskViewModel(TaskItem task,int projectId, Project project)
         {
             _task = task;
             _name = task.Name;
@@ -74,6 +76,7 @@ namespace TimeTracker.Apps.ViewModels
             _nameButton = "Démarrer";
             _start = false;
             _timer = "";
+            _project = project;
         }
 
         public ObservableCollection<TimeItem> convertList(TaskItem task, List<TimeItem> times)
